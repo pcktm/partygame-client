@@ -1,22 +1,19 @@
 import {
-  Box, Container, useToast, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
+  Box, Container, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
   Center, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, Input, FormHelperText, Spinner,
   Alert, AlertIcon,
 } from '@chakra-ui/react';
 import React, {useEffect, useState} from 'react';
-import {Room} from 'colyseus.js';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
-import {useClient} from '../lib/client';
 
 export default function Landing() {
   const [isConnecting, setConnecting] = useState(false);
   const [flow, setFlow] = useState<'join' | 'create'>();
   const [pin, setPin] = useState('');
-  const client = useClient();
-  const setRoom = useRoomStore((s) => s.setRoom);
+  const joinRoomById = useRoomStore((s) => s.joinRoomById);
+  const createRoom = useRoomStore((s) => s.createRoom);
   const modalDisclosure = useDisclosure();
-  const toast = useToast();
 
   const handlePinInput = (value: string) => {
     setConnecting(true);
@@ -32,31 +29,12 @@ export default function Landing() {
   };
 
   const handleModalSubmit = async (name: string) => {
-    if (!client) return;
-    let room: Room;
-
-    try {
-      if (flow === 'create') {
-        room = await client.create('game_room', {nickname: name});
-      } else if (flow === 'join') {
-        room = await client.joinById(pin.toLowerCase().trim(), {nickname: name});
-      }
-    } catch (e) {
-      toast({
-        description: flow === 'join' ? `Failed to join room: "${pin.toUpperCase()}"` : 'Failed to create room',
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-        position: 'top',
-      });
-    } finally {
-      setTimeout(() => {
-        if (room) {
-          setRoom(room);
-        }
-        setConnecting(false);
-      }, 600);
+    if (flow === 'create') {
+      await createRoom(name);
+    } else if (flow === 'join') {
+      await joinRoomById(pin.trim().toLowerCase(), name);
     }
+    setConnecting(false);
   };
 
   return (
@@ -149,8 +127,8 @@ const NameModal = ({isOpen, onClose, onSubmit}: ReturnType<typeof useDisclosure>
   const handleInputChange = (ev: React.FormEvent<HTMLInputElement>) => setInput(ev.currentTarget.value.trim());
 
   const handleSubmit = () => {
-    onSubmit(input);
     onClose();
+    onSubmit(input);
   };
 
   useEffect(() => {

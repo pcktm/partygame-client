@@ -8,7 +8,7 @@ export const ColyseusClientProvider = ({children}: {children: React.ReactNode}) 
 
   useEffect(() => {
     if (!client) {
-      const cc = new Client('ws://192.168.1.206:4000');
+      const cc = new Client('ws://192.168.1.209:4000');
       setClient(cc);
     }
   }, [client]);

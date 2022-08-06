@@ -2,6 +2,7 @@ import {
   Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider,
 } from '@chakra-ui/react';
 import {useEffect, useMemo, useState} from 'react';
+import shallow from 'zustand/shallow';
 import {Player} from '../lib/state';
 import {useRoomStore} from '../lib/room';
 import styles from '../styles/fixes.module.scss';
@@ -9,7 +10,7 @@ import styles from '../styles/fixes.module.scss';
 export default function Lobby() {
   const [players, setPlayers] = useState<(Player & {id: string})[]>([]);
   const room = useRoomStore((s) => s.room);
-  const [isReady, setReady] = useState(room.state.players.get(room.sessionId)?.isReady ?? false);
+  const [isReady, setReady] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -21,6 +22,7 @@ export default function Lobby() {
           isReady: v.isReady,
           emoji: v.emoji,
           score: v.score,
+          answeredCurrentQuestion: v.answeredCurrentQuestion,
         });
       });
       setPlayers(p as any);
@@ -58,7 +60,7 @@ export default function Lobby() {
           <Wrap spacing="30px" align="center" justify="center">
             {players.map((player, index) => (
               <WrapItem key={player.id}>
-                <PlayerAvatar name={player.nickname} emoji={player.emoji} isReady={player.isReady ?? false} />
+                <PlayerAvatar player={player} />
               </WrapItem>
             ))}
           </Wrap>
@@ -74,20 +76,30 @@ export default function Lobby() {
   );
 }
 
-const PlayerAvatar = ({name, emoji, isReady}: {name: string, emoji: string, isReady: boolean}) => (
-  <Box w="90px">
-    <Stack alignItems="center">
-      <Text fontSize="4xl">
-        {emoji}
-      </Text>
-      <Text textAlign="center">
-        <Mark bg={isReady ? 'green' : 'black'} color="white" px="2" py="1">
-          {name}
-        </Mark>
-      </Text>
-    </Stack>
-  </Box>
-);
+const PlayerAvatar = ({player}: {player: Player & {id: string}}) => {
+  const {sessionId} = useRoomStore((s) => s.room);
+  const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
+  const backgroundColor = useMemo(() => {
+    if (player.isReady) return 'green';
+    if (player.id === sessionId) return 'black';
+    return 'black';
+  }, [player, sessionId]);
+  return (
+    <Box w="90px">
+      <Stack alignItems="center">
+        <Text fontSize="4xl">
+          {player.emoji}
+        </Text>
+        <Text textAlign="center">
+          <Mark bg={backgroundColor} color="white" px="1" py="1">
+            {player.nickname}
+            {player.id === state.host && <> 👑</>}
+          </Mark>
+        </Text>
+      </Stack>
+    </Box>
+  );
+};
 
 const JoinCodeDisplay = ({code}: {code: string}) => (
   <Box>

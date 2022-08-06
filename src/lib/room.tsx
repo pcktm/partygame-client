@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 import {Room, Client} from 'colyseus.js';
 import create, {StoreApi} from 'zustand';
 import React, {useEffect} from 'react';
@@ -12,8 +13,10 @@ export const useRoomStore = useStore;
 
 interface RoomState {
   room: Room<State>;
-  joinRoomById: (roomId: string) => Promise<void>;
-  createRoom: () => Promise<void>;
+  state: State;
+  revision: number;
+  joinRoomById: (roomId: string, name: string) => Promise<void>;
+  createRoom: (name: string) => Promise<void>;
   dispose: () => void;
   setRoom: (room: Room) => void;
 }
@@ -34,23 +37,51 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
     <Provider
       createStore={() => create<RoomState>((set, get) => ({
         room: undefined as any,
-        joinRoomById: async (roomId: string) => {
+        state: undefined as any,
+        revision: 0,
+        joinRoomById: async (roomId, nickname) => {
           const {client: cc} = clientWrapper;
           if (cc) {
-            set({room: await cc.joinById(roomId)});
+            try {
+              const r = await cc.joinById<State>(roomId, {nickname});
+              await new Promise((res) => setTimeout(res, 500));
+              get().setRoom(r);
+            } catch (e) {
+              toast({
+                description: `Failed to join room: "${roomId.toUpperCase()}"`,
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+                position: 'top',
+              });
+            }
           }
         },
-        createRoom: async () => {
+        createRoom: async (nickname) => {
           const {client: cc} = clientWrapper;
           if (cc) {
-            set({room: await cc.create('game_room')});
+            try {
+              const r = await cc.create<State>('game_room', {nickname});
+              get().setRoom(r);
+            } catch (e) {
+              toast({
+                description: 'Failed to create room',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+                position: 'top',
+              });
+            }
           }
         },
-        dispose: () => {
-          get().room?.removeAllListeners();
-          get().room?.leave(false);
-        },
-        setRoom: (room: Room) => {
+        setRoom: async (room: Room) => {
+          if (get().room) {
+            get().dispose();
+          }
+          set({room, state: room.state});
+          room.onStateChange(async (newState) => {
+            set({state: newState, revision: get().revision + 1});
+          });
           room.onLeave((code) => {
             if (code === 1000) {
               toast({
@@ -69,9 +100,18 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
                 position: 'top',
               });
             }
-            set({room: undefined});
+            get().dispose();
           });
-          set({room});
+        },
+        dispose: () => {
+          console.debug('Disposing room');
+          get().room?.removeAllListeners();
+          try {
+            get().room?.leave(false);
+          } catch (e) {
+            console.error(e);
+          }
+          set({room: undefined, state: undefined});
         },
       }))}
     >
