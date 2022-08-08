@@ -8,32 +8,14 @@ import {useRoomStore} from '../lib/room';
 import styles from '../styles/fixes.module.scss';
 
 export default function Lobby() {
-  const [players, setPlayers] = useState<(Player & {id: string})[]>([]);
+  const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const players = Array.from(state.players.values());
   const room = useRoomStore((s) => s.room);
   const [isReady, setReady] = useState(false);
 
-  useEffect(() => {
-    const update = () => {
-      const p: (Player & {id: string})[] = [];
-      room.state.players.forEach((v: any, key: string) => {
-        p.push({
-          id: key,
-          nickname: v.nickname,
-          isReady: v.isReady,
-          emoji: v.emoji,
-          score: v.score,
-          answeredCurrentQuestion: v.answeredCurrentQuestion,
-        });
-      });
-      setPlayers(p as any);
-    };
-
-    update();
-    room.onStateChange(update);
-  }, [room]);
-
   const toggleReady = async () => {
-    await room.send('toggleReady', !isReady);
+    room.send('toggleReady', !isReady);
     setReady((s) => !s);
   };
 
@@ -58,7 +40,7 @@ export default function Lobby() {
 
         <Center flex={1}>
           <Wrap spacing="30px" align="center" justify="center">
-            {players.map((player, index) => (
+            {players.map((player) => (
               <WrapItem key={player.id}>
                 <PlayerAvatar player={player} />
               </WrapItem>
@@ -76,14 +58,9 @@ export default function Lobby() {
   );
 }
 
-const PlayerAvatar = ({player}: {player: Player & {id: string}}) => {
-  const {sessionId} = useRoomStore((s) => s.room);
+const PlayerAvatar = ({player}: {player: Player}) => {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
-  const backgroundColor = useMemo(() => {
-    if (player.isReady) return 'green';
-    if (player.id === sessionId) return 'black';
-    return 'black';
-  }, [player, sessionId]);
+
   return (
     <Box w="90px">
       <Stack alignItems="center">
@@ -91,7 +68,7 @@ const PlayerAvatar = ({player}: {player: Player & {id: string}}) => {
           {player.emoji}
         </Text>
         <Text textAlign="center">
-          <Mark bg={backgroundColor} color="white" px="1" py="1">
+          <Mark bg={player.isReady ? 'green' : 'black'} color="white" px="1" py="1">
             {player.nickname}
             {player.id === state.host && <> 👑</>}
           </Mark>

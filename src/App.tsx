@@ -16,7 +16,7 @@ function App() {
     return <Landing />;
   }
 
-  return <DuelScreen />;
+  // return <DuelScreen />;
 
   if (state.screen === 'lobby') {
     return <Lobby />;

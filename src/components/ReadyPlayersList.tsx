@@ -6,7 +6,7 @@ import shallow from 'zustand/shallow';
 import {Player} from '../lib/state';
 import {useRoomStore} from '../lib/room';
 
-export default function PlayersThatAnsweredList() {
+export default function ReadyPlayersList() {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
   const arr = Array.from(state.players.values());
   return (
@@ -14,8 +14,8 @@ export default function PlayersThatAnsweredList() {
 
       {
         arr.map((p) => (
-          <WrapItem>
-            <Tag size="lg" colorScheme={p.answeredCurrentQuestion ? 'green' : 'gray'} borderRadius="full">
+          <WrapItem key={p.id}>
+            <Tag size="lg" colorScheme={p.isReady ? 'green' : 'gray'} borderRadius="full">
               <Text
                 fontSize="xl"
                 ml={-1}

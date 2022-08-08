@@ -4,7 +4,8 @@ import {
 } from '@chakra-ui/react';
 import {useMemo, useState} from 'react';
 import shallow from 'zustand/shallow';
-import PlayersThatAnsweredList from '../components/PlayersThatAnsweredList';
+import {Question} from '../lib/state';
+import ReadyPlayersList from '../components/ReadyPlayersList';
 import {useRoomStore} from '../lib/room';
 import styles from '../styles/fixes.module.scss';
 
@@ -37,7 +38,7 @@ export default function QuestionAskedScreen() {
 
         <Center flex={1} mb={4}>
           {
-            state.players.get(sessionId)?.answeredCurrentQuestion && (
+            state.players.get(sessionId)?.isReady && (
               <Text>
                 Wait for others to answer...
               </Text>
@@ -46,7 +47,7 @@ export default function QuestionAskedScreen() {
         </Center>
 
         <Box>
-          <PlayersThatAnsweredList />
+          <ReadyPlayersList />
         </Box>
 
       </Container>
@@ -54,7 +55,7 @@ export default function QuestionAskedScreen() {
   );
 }
 
-function QuestionBox({question}: {question: string}) {
+function QuestionBox({question}: {question: Question}) {
   const MAX_LENGTH = 35;
   const [submitted, setSubmitted] = useState(false);
   const [answer, setAnswer] = useState('');
@@ -69,7 +70,7 @@ function QuestionBox({question}: {question: string}) {
     <Stack flexDirection="column" spacing={0} mb={4}>
       <Box px={3} py={4} bg="black" color="white">
         <Heading fontWeight={600} fontSize="3xl">
-          {question}
+          {question.text}
         </Heading>
       </Box>
       <Input

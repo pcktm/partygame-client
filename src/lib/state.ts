@@ -1,9 +1,19 @@
 export type Player = {
+  id: string;
   nickname: string;
   score: number;
   isReady: boolean;
   emoji: string;
-  answeredCurrentQuestion: boolean;
+};
+
+export type Question = {
+  text: string;
+};
+
+export type Duel = {
+  answer: string;
+  left: Player;
+  right: Player;
 };
 
 export type State = {
@@ -11,6 +21,6 @@ export type State = {
   roundCount: number;
   screen: 'lobby' | 'duel' | 'questionAsked';
   players: Map<string, Player>;
-  currentQuestion: string;
-  submittedAnswers: string[];
+  currentQuestion: Question;
+  currentDuel: Duel;
 };

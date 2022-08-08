@@ -22,7 +22,8 @@ interface RoomState {
 }
 
 // LOL @ js pointer haxxx
-const clientWrapper: {client?: Client} = {
+// V8 engine? BTFOd & fucked
+const clientWrapperHAXX: {client?: Client} = {
   client: undefined,
 };
 
@@ -30,7 +31,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
   const client = useClient();
   const toast = useToast();
   useEffect(() => {
-    clientWrapper.client = client;
+    clientWrapperHAXX.client = client;
   }, [client]);
 
   return (
@@ -40,7 +41,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
         state: undefined as any,
         revision: 0,
         joinRoomById: async (roomId, nickname) => {
-          const {client: cc} = clientWrapper;
+          const {client: cc} = clientWrapperHAXX;
           if (cc) {
             try {
               const r = await cc.joinById<State>(roomId, {nickname});
@@ -58,7 +59,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
           }
         },
         createRoom: async (nickname) => {
-          const {client: cc} = clientWrapper;
+          const {client: cc} = clientWrapperHAXX;
           if (cc) {
             try {
               const r = await cc.create<State>('game_room', {nickname});
