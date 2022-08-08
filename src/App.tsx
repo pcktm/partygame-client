@@ -6,7 +6,7 @@ import shallow from 'zustand/shallow';
 import Landing from './screens/Landing';
 import Lobby from './screens/Lobby';
 import {useRoomStore} from './lib/room';
-import QuestionAskedScreen from './screens/Question';
+import QuestionAskedScreen from './screens/QuestionAsked';
 import DuelScreen from './screens/Duel';
 
 function App() {
@@ -15,8 +15,6 @@ function App() {
   if (!state || !state?.screen) {
     return <Landing />;
   }
-
-  // return <DuelScreen />;
 
   if (state.screen === 'lobby') {
     return <Lobby />;

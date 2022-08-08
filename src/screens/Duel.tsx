@@ -82,24 +82,81 @@ export default function DuelScreen() {
             </Text>
           </Center>
         </Stack>
+        <HStack
+          flex={1}
+          mt={state.currentDuel.revealVotes ? 10 : 0}
+          alignItems={state.currentDuel.revealVotes ? 'baseline' : 'center'}
+        >
+          {
+            !state.currentDuel.revealVotes ? (
+              [left, right].map((player) => (
+                <Box flex={1} key={player.id}>
+                  <PlayerChoiceBox
+                    player={player}
+                    selected={myChoice === player.id}
+                    fogged={!!myChoice}
+                    onClick={() => handleChoiceSubmit(player)}
+                  />
+                </Box>
+              ))
+            ) : (
+              [left, right].map((side) => {
+                const voters: Player[] = [];
+                state.currentDuel.votes.forEach((choice, voterId) => {
+                  const voter = state.players.get(voterId);
+                  if (choice === side.id && voter) {
+                    voters.push(voter);
+                  }
+                });
 
-        <HStack flex={1} alignItems="center">
+                const isCorrectChoice = side.id === state.currentDuel.correctPlayerId;
 
-          {[left, right].map((player) => (
-            <Box flex={1} key={player.id}>
-              <PlayerChoiceBox
-                player={player}
-                selected={myChoice === player.id}
-                fogged={!!myChoice}
-                onClick={() => handleChoiceSubmit(player)}
-              />
-            </Box>
-          ))}
+                return (
+                  <Box key={side.id} flex={1} textAlign="center">
+                    <Heading color="black" size="md" mb={1}>
+                      {side.nickname}
+                    </Heading>
+                    <Heading mb={3}>
+                      <Mark bg={isCorrectChoice ? 'green' : 'red.700'} color="white" px="2" py="1">
+                        {`${Math.floor((voters.length / state.currentDuel.votes.size) * 100)}%`}
+                      </Mark>
+                    </Heading>
+
+                    <Wrap align="center" justify="center">
+                      {
+                        voters.map((v) => (
+                          <WrapItem key={v.id}>
+                            <Tag size="lg" colorScheme={isCorrectChoice ? 'green' : 'red'} borderRadius="full">
+                              <Text
+                                fontSize="xl"
+                                ml={-1}
+                                mr={2}
+                              >
+                                {v.emoji}
+                              </Text>
+                              <TagLabel mb={0.2}>{v.nickname}</TagLabel>
+                            </Tag>
+                          </WrapItem>
+                        ))
+                      }
+                    </Wrap>
+                    {voters.length === 0 && (
+                    <Box>
+                      No one?
+                    </Box>
+                    )}
+                  </Box>
+                );
+              })
+            )
+          }
 
         </HStack>
 
         <Box>
-          <ReadyPlayersList />
+          {
+            !state.currentDuel.revealVotes && <ReadyPlayersList />
+          }
         </Box>
 
       </Container>

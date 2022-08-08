@@ -1,9 +1,7 @@
 import {
   Wrap, WrapItem, Tag, Avatar, TagLabel, Text,
 } from '@chakra-ui/react';
-import {useMemo} from 'react';
 import shallow from 'zustand/shallow';
-import {Player} from '../lib/state';
 import {useRoomStore} from '../lib/room';
 
 export default function ReadyPlayersList() {
