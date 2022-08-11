@@ -29,6 +29,10 @@ export default function DuelScreen() {
     });
   }, [room]);
 
+  const requestNextDuel = () => {
+    room.send('requestNextScreen');
+  };
+
   return (
     <Stack className={styles.safarishit}>
       <Container flex={1} py="15px" display="flex" flexDirection="column">
@@ -109,15 +113,13 @@ export default function DuelScreen() {
                   }
                 });
 
-                const isCorrectChoice = side.id === state.currentDuel.correctPlayerId;
-
                 return (
                   <Box key={side.id} flex={1} textAlign="center">
                     <Heading color="black" size="md" mb={1}>
                       {side.nickname}
                     </Heading>
                     <Heading mb={3}>
-                      <Mark bg={isCorrectChoice ? 'green' : 'red.700'} color="white" px="2" py="1">
+                      <Mark bg="black" color="white" px="2" py="1">
                         {`${Math.floor((voters.length / state.currentDuel.votes.size) * 100)}%`}
                       </Mark>
                     </Heading>
@@ -126,7 +128,7 @@ export default function DuelScreen() {
                       {
                         voters.map((v) => (
                           <WrapItem key={v.id}>
-                            <Tag size="lg" colorScheme={isCorrectChoice ? 'green' : 'red'} borderRadius="full">
+                            <Tag size="lg" borderRadius="full">
                               <Text
                                 fontSize="xl"
                                 ml={-1}
@@ -152,6 +154,16 @@ export default function DuelScreen() {
           }
 
         </HStack>
+
+        {(room.sessionId === state.host && state.currentDuel.revealVotes) && (
+          <>
+            <Divider mt="15px" />
+
+            <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextDuel}>
+              NEXT DUEL
+            </Button>
+          </>
+        )}
 
         <Box>
           {

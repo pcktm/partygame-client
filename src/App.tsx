@@ -9,6 +9,7 @@ import {useRoomStore} from './lib/room';
 import QuestionAskedScreen from './screens/QuestionAsked';
 import DuelScreen from './screens/Duel';
 import ScoresScreen from './screens/Scores';
+import WhoSaidWhatScreen from './screens/WhoSaidWhat';
 
 function App() {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
@@ -29,6 +30,10 @@ function App() {
 
   if (state.screen === 'duel') {
     return <DuelScreen />;
+  }
+
+  if (state.screen === 'whoSaidWhat') {
+    return <WhoSaidWhatScreen />;
   }
 
   if (state.screen === 'scores') {

@@ -82,7 +82,7 @@ export default function Landing() {
           && (
           <Alert status="warning">
             <AlertIcon />
-            To serio pierwsza wersja więc się na 100% popsuje esssa
+            To już druga wersja ale prawdopodobieństwo ze sie popsuje jest takie samo
           </Alert>
           )}
       </Stack>

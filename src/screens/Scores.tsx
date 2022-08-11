@@ -1,5 +1,5 @@
 import {
-  Box, Center, Container, Divider, Heading, HStack, Mark, Spinner, Stack, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr,
+  Box, Button, Center, Container, Divider, Heading, HStack, Mark, Spinner, Stack, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr,
 } from '@chakra-ui/react';
 import React, {useEffect, useState} from 'react';
 import shallow from 'zustand/shallow';
@@ -9,12 +9,18 @@ import {HeroTitle} from '../components/Heros';
 import {Player} from '../lib/state';
 
 export default function ScoresScreen() {
+  const {room} = useRoomStore((s) => ({room: s.room}));
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
 
   const sortedPlayers = state.finalScores.sort((a, b) => b.score - a.score);
 
   const first = sortedPlayers[0];
   const podium = sortedPlayers.slice(1, 3);
+
+  const restartGame = () => {
+    room.send('restartGame');
+    console.debug('restarting game');
+  };
 
   return (
     <Stack className={styles.safarishit}>
@@ -49,6 +55,16 @@ export default function ScoresScreen() {
           ) : <Spinner size="lg" alignSelf="center" />}
 
         </Stack>
+        {room.sessionId === state.host && (
+        <>
+          <Divider mt="15px" />
+
+          <Button colorScheme="gray" size="lg" mt="15px" onClick={restartGame}>
+            PLAY AGAIN
+          </Button>
+        </>
+        )}
+
       </Container>
     </Stack>
   );

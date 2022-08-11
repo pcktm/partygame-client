@@ -8,6 +8,7 @@ export const ColyseusClientProvider = ({children}: {children: React.ReactNode}) 
 
   useEffect(() => {
     if (!client) {
+      // 'wss://gameapi.k00l.net'
       const cc = new Client('wss://gameapi.k00l.net');
       setClient(cc);
     }
