@@ -6,6 +6,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
+import {HeroTagline, HeroTitle} from '../components/Heros';
 
 export default function Landing() {
   const [isConnecting, setConnecting] = useState(false);
@@ -47,39 +48,8 @@ export default function Landing() {
               as={Box}
               justifyContent="center"
             >
-              <Heading
-                fontWeight="900"
-                fontSize="4xl"
-                lineHeight="tall"
-                mb="10px"
-              >
-                <Mark bg="black" color="white" px="2" py="1">
-                  UNNAMED
-                </Mark>
-                {' '}
-                <br />
-                <Mark bg="black" color="white" px="2" py="1">
-                  PARTY
-                </Mark>
-                {' '}
-                <br />
-                <Mark bg="black" color="white" px="2" py="1">
-                  GAME
-                </Mark>
-                {' '}
-                <br />
-              </Heading>
-              <Stack alignItems="end">
-                <Text textAlign="right" fontSize="md">
-                  A game where you
-                  {' '}
-                  <Mark bg="black" color="white" px="2" py="1">anwser questions</Mark>
-                  <br />
-                  and
-                  {' '}
-                  <Mark bg="black" color="white" px="2" py="1">lose friends.</Mark>
-                </Text>
-              </Stack>
+              <HeroTitle />
+              <HeroTagline />
             </Stack>
           </Box>
 
@@ -108,11 +78,11 @@ export default function Landing() {
           </Button>
 
         </Container>
-        {process.env.NODE_ENV === 'production'
+        {(process.env.NODE_ENV === 'production' || true)
           && (
           <Alert status="warning">
             <AlertIcon />
-            Goes without saying, but this is an alpha release so it WILL break.
+            To serio pierwsza wersja więc się na 100% popsuje esssa
           </Alert>
           )}
       </Stack>
@@ -150,7 +120,7 @@ const NameModal = ({isOpen, onClose, onSubmit}: ReturnType<typeof useDisclosure>
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="green" onClick={handleSubmit} disabled={input.length === 0}>Done!</Button>
+          <Button colorScheme="green" onClick={handleSubmit} disabled={input.length === 0 || input.length > 15}>Done!</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

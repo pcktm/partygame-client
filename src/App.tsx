@@ -8,6 +8,7 @@ import Lobby from './screens/Lobby';
 import {useRoomStore} from './lib/room';
 import QuestionAskedScreen from './screens/QuestionAsked';
 import DuelScreen from './screens/Duel';
+import ScoresScreen from './screens/Scores';
 
 function App() {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
@@ -15,6 +16,8 @@ function App() {
   if (!state || !state?.screen) {
     return <Landing />;
   }
+
+  // return <ScoresScreen />;
 
   if (state.screen === 'lobby') {
     return <Lobby />;
@@ -26,6 +29,10 @@ function App() {
 
   if (state.screen === 'duel') {
     return <DuelScreen />;
+  }
+
+  if (state.screen === 'scores') {
+    return <ScoresScreen />;
   }
 
   return (

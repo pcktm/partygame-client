@@ -24,6 +24,7 @@ export type State = {
   roundCount: number;
   screen: 'lobby' | 'duel' | 'questionAsked' | 'votesRevealed' | 'scores';
   players: Map<string, Player>;
+  finalScores: Player[];
   currentQuestion: Question;
   currentDuel: Duel;
 };

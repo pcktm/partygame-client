@@ -27,7 +27,7 @@ export default function DuelScreen() {
     room.onMessage('beginNewDuel', () => {
       setMyChoice(undefined);
     });
-  });
+  }, [room]);
 
   return (
     <Stack className={styles.safarishit}>
