@@ -13,7 +13,9 @@ export default function WhoSaidWhatScreen() {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
 
   const rawAns = Array.from(state.currentQuestion.answers).map(([id, text]) => ({
-    player: state.players.get(id) as Player,
+    player: state.players.get(id) ?? {
+      id, nickname: 'Unknown Player', emoji: '❌',
+    },
     text,
   }));
 
@@ -71,14 +73,16 @@ export default function WhoSaidWhatScreen() {
             }
           </Stack>
         </Stack>
-        {room.sessionId === state.host && (
-        <>
-          <Divider mt="15px" />
+        {room.sessionId === state.host ? (
+          <>
+            <Divider mt="15px" />
 
-          <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextRound}>
-            NEXT ROUND
-          </Button>
-        </>
+            <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextRound}>
+              NEXT ROUND
+            </Button>
+          </>
+        ) : (
+          <Text>wait for the host to start next round</Text>
         )}
       </Container>
     </Stack>

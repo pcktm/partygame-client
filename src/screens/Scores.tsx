@@ -1,12 +1,14 @@
 import {
   Box, Button, Center, Container, Divider, Heading, HStack, Mark, Spinner, Stack, Table, TableContainer, Tbody, Td, Text, Tfoot, Th, Thead, Tr,
 } from '@chakra-ui/react';
-import React, {useEffect, useState} from 'react';
+
 import shallow from 'zustand/shallow';
+import React, {Ref, useCallback, useState} from 'react';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
 import {HeroTitle} from '../components/Heros';
 import {Player} from '../lib/state';
+import {CanvasBackgroundConfetti} from '../components/CanvasConfetti';
 
 export default function ScoresScreen() {
   const {room} = useRoomStore((s) => ({room: s.room}));
@@ -34,7 +36,7 @@ export default function ScoresScreen() {
           {sortedPlayers.length > 0 ? (
             <Stack flex={1} spacing={1}>
 
-              <Box flex={1} mb={5}>
+              <Box flex={1} mb={6}>
 
                 <Podium player={first} place={1} mb={6} />
                 <HStack flex={1} align="start">
@@ -56,15 +58,11 @@ export default function ScoresScreen() {
 
         </Stack>
         {room.sessionId === state.host && (
-        <>
-          <Divider mt="15px" />
-
-          <Button colorScheme="gray" size="lg" mt="15px" onClick={restartGame}>
+          <Button colorScheme="gray" size="lg" mt="20px" onClick={restartGame}>
             PLAY AGAIN
           </Button>
-        </>
         )}
-
+        <CanvasBackgroundConfetti />
       </Container>
     </Stack>
   );
@@ -94,7 +92,7 @@ Podium.defaultProps = {
 };
 
 const LeaderBoard = ({players}: {players: Player[]}) => (
-  <TableContainer flex={1}>
+  <TableContainer flex={1} borderRadius="md" py={4} backdropFilter="blur(4px)" bg="whiteAlpha.400">
     <Table flex={1}>
       <Thead>
         <Tr>

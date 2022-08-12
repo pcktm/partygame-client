@@ -1,7 +1,10 @@
 import {
   Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider,
 } from '@chakra-ui/react';
-import {useEffect, useMemo, useState} from 'react';
+import {
+  useEffect, useMemo, useRef, useState, Fragment,
+} from 'react';
+import {motion} from 'framer-motion';
 import shallow from 'zustand/shallow';
 import {Player} from '../lib/state';
 import {useRoomStore} from '../lib/room';
@@ -39,13 +42,7 @@ export default function Lobby() {
         </Center>
 
         <Center flex={1}>
-          <Wrap spacing="30px" align="center" justify="center">
-            {players.map((player) => (
-              <WrapItem key={player.id}>
-                <PlayerAvatar player={player} />
-              </WrapItem>
-            ))}
-          </Wrap>
+          <PlayerList players={players} />
         </Center>
 
         <Divider mt="15px" />
@@ -57,6 +54,16 @@ export default function Lobby() {
     </Stack>
   );
 }
+
+const PlayerList = ({players}: {players: Player[]}) => (
+  <Wrap shouldWrapChildren={false} spacing="30px" align="center" justify="center">
+    {players.map((player) => (
+      <WrapItem key={player.id}>
+        <PlayerAvatar player={player} />
+      </WrapItem>
+    ))}
+  </Wrap>
+);
 
 const PlayerAvatar = ({player}: {player: Player}) => {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);

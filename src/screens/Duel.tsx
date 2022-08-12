@@ -155,7 +155,7 @@ export default function DuelScreen() {
 
         </HStack>
 
-        {(room.sessionId === state.host && state.currentDuel.revealVotes) && (
+        {state.currentDuel.revealVotes && ((room.sessionId === state.host && state.currentDuel.revealVotes) ? (
           <>
             <Divider mt="15px" />
 
@@ -163,7 +163,7 @@ export default function DuelScreen() {
               NEXT DUEL
             </Button>
           </>
-        )}
+        ) : (<>Wait for the host to start next duel</>))}
 
         <Box>
           {

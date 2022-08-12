@@ -78,7 +78,7 @@ export default function Landing() {
           </Button>
 
         </Container>
-        {(process.env.NODE_ENV === 'production' || true)
+        {(import.meta.env.ENABLE_WARNING)
           && (
           <Alert status="warning">
             <AlertIcon />

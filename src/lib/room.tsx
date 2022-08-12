@@ -53,7 +53,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
-                position: 'top',
+                position: 'top-right',
               });
             }
           }
@@ -70,7 +70,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
-                position: 'top',
+                position: 'top-right',
               });
             }
           }
@@ -90,7 +90,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
                 status: 'info',
                 duration: 9000,
                 isClosable: true,
-                position: 'top',
+                position: 'top-right',
               });
             } else {
               toast({
@@ -98,7 +98,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
-                position: 'top',
+                position: 'top-right',
               });
             }
             get().dispose();
