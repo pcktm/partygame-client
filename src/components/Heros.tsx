@@ -32,7 +32,7 @@ export const HeroTagline = () => (
     <Text textAlign="right" fontSize="md">
       A game where you
       {' '}
-      <Mark bg="black" color="white" px="2" py="1">anwser questions</Mark>
+      <Mark bg="black" color="white" px="2" py="1">answer questions</Mark>
       <br />
       and
       {' '}

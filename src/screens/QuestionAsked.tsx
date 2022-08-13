@@ -95,7 +95,7 @@ function QuestionBox({question}: {question: Question}) {
         </Heading>
         <Button
           alignSelf="end"
-          disabled={answer.length > MAX_LENGTH || submitted}
+          disabled={answer.length === 0 || answer.length > MAX_LENGTH || submitted}
           size="lg"
           onClick={handleSubmit}
         >
