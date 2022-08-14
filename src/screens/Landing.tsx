@@ -7,6 +7,7 @@ import React, {useEffect, useState} from 'react';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
 import {HeroTagline, HeroTitle} from '../components/Heros';
+import QuestionCountIndicator from '../components/QuestionCountIndicator';
 
 export default function Landing() {
   const [isConnecting, setConnecting] = useState(false);
@@ -43,13 +44,16 @@ export default function Landing() {
       <NameModal {...modalDisclosure} onSubmit={handleModalSubmit} />
       <Stack className={styles.safarishit}>
         <Container flex={1} py="15px" display="flex" flexDirection="column">
-          <Box>
+          <Box position="relative">
             <Stack
               as={Box}
               justifyContent="center"
             >
               <HeroTitle />
               <HeroTagline />
+              <Box alignSelf="end">
+                <QuestionCountIndicator />
+              </Box>
             </Stack>
           </Box>
 
