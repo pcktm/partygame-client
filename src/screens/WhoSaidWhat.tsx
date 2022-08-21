@@ -19,8 +19,6 @@ export default function WhoSaidWhatScreen() {
     text,
   }));
 
-  console.log(JSON.stringify(state.currentQuestion.answers));
-
   const requestNextRound = () => {
     room.send('requestNextScreen');
   };
@@ -51,24 +49,31 @@ export default function WhoSaidWhatScreen() {
             </Mark>
           </Center>
 
-          <Stack flex={1} spacing={5} pt={5}>
+          <Stack flex={1} spacing={7} pt={5}>
             {
-              rawAns.map(({player, text}) => (
-                <Stack key={player.id} spacing={2}>
-                  <Heading size="lg" alignSelf="start">
-                    <Mark bg="black" color="white" px="2" py="1">
-                      {player.emoji}
-                      {' '}
-                      {player.nickname}
-                    </Mark>
-                    {' '}
-                    said:
-                  </Heading>
-                  <Heading alignSelf="end" size="md">
-                    {text}
-                  </Heading>
+              rawAns.map(({player, text}, index) => (
+                <Box key={player.id} alignSelf="start">
+                  <Stack spacing={2}>
+                    <Heading
+                      size="lg"
+                      wordBreak="break-word"
+                      pr="50px"
+                    >
+                      {`“${text}”`}
+                    </Heading>
+                    <Box
+                      alignSelf="end"
 
-                </Stack>
+                    >
+                      {' — '}
+                      <Mark bg="black" color="white" px="2" py="1" wordBreak="break-word">
+                        {player.emoji}
+                        {' '}
+                        {player.nickname}
+                      </Mark>
+                    </Box>
+                  </Stack>
+                </Box>
               ))
             }
           </Stack>

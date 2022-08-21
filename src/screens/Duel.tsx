@@ -72,6 +72,7 @@ export default function DuelScreen() {
                 fontWeight="900"
                 fontSize="4xl"
                 textAlign="left"
+                wordBreak="break-word"
               >
                 {state.currentDuel.answer}
               </Heading>
@@ -105,10 +106,10 @@ export default function DuelScreen() {
               ))
             ) : (
               [left, right].map((side) => {
-                const voters: Player[] = [];
+                const voters: {id: string, nickname: string, emoji: string}[] = [];
                 state.currentDuel.votes.forEach((choice, voterId) => {
-                  const voter = state.players.get(voterId);
-                  if (choice === side.id && voter) {
+                  const voter = state.players.get(voterId) ?? {id: voterId, nickname: 'Unknown Player', emoji: '❌'};
+                  if (choice === side.id) {
                     voters.push(voter);
                   }
                 });
@@ -199,7 +200,7 @@ function PlayerChoiceBox(
         <Text fontSize="4xl">
           {player.emoji}
         </Text>
-        <Text textAlign="center">
+        <Text textAlign="center" wordBreak="break-all">
           {player.nickname}
         </Text>
       </Stack>

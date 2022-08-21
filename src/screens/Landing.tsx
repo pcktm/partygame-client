@@ -1,7 +1,7 @@
 import {
   Box, Container, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
   Center, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, Input, FormHelperText, Spinner,
-  Alert, AlertIcon,
+  Alert, AlertIcon, Badge,
 } from '@chakra-ui/react';
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/fixes.module.scss';

@@ -83,6 +83,18 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
           room.onStateChange(async (newState) => {
             set({state: newState, revision: get().revision + 1});
           });
+          room.onMessage('pushToast', (message: {
+            title?: string, description: string, status?: string, duration?: number, isClosable?: boolean
+          }) => {
+            toast({
+              title: message.title,
+              description: message.description,
+              status: message.status as any ?? 'info',
+              duration: message.duration ?? 4000,
+              position: 'top-right',
+              isClosable: message.isClosable ?? true,
+            });
+          });
           room.onLeave((code) => {
             if (code === 1000) {
               toast({
