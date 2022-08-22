@@ -33,7 +33,7 @@ export default function DuelScreen() {
     room.send('requestNextScreen');
   };
 
-  console.log(JSON.parse(JSON.stringify(state)));
+  // console.log(JSON.parse(JSON.stringify(state)));
 
   return (
     <Stack className={styles.safarishit}>

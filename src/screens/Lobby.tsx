@@ -74,12 +74,17 @@ const PlayerAvatar = ({player}: {player: Player}) => {
         <Text fontSize="4xl">
           {player.emoji}
         </Text>
-        <Text textAlign="center">
-          <Mark bg={player.isReady ? 'green' : 'black'} color="white" px="1" py="1" wordBreak="break-all">
-            {player.nickname}
-            {player.id === state.host && <> 👑</>}
-          </Mark>
-        </Text>
+        <Box
+          bg={player.isReady ? 'green' : 'black'}
+          color="white"
+          px="1"
+          py="1"
+          wordBreak="break-all"
+          textAlign="center"
+        >
+          {player.nickname}
+          {player.id === state.host && <> 👑</>}
+        </Box>
       </Stack>
     </Box>
   );

@@ -100,7 +100,8 @@ const NameModal = ({isOpen, onClose, onSubmit}: ReturnType<typeof useDisclosure>
 
   const handleInputChange = (ev: React.FormEvent<HTMLInputElement>) => setInput(ev.currentTarget.value.trim());
 
-  const handleSubmit = () => {
+  const handleSubmit = (ev: React.FormEvent) => {
+    ev.preventDefault();
     onClose();
     onSubmit(input);
   };
@@ -116,16 +117,19 @@ const NameModal = ({isOpen, onClose, onSubmit}: ReturnType<typeof useDisclosure>
       <ModalOverlay backdropFilter="blur(20px)" bg="blackAlpha.400" />
       <ModalContent>
         <ModalHeader>First, introduce yourself! 🙈</ModalHeader>
-        <ModalBody>
-          <FormControl>
+        <FormControl as="form" onSubmit={handleSubmit}>
+
+          <ModalBody>
             {/* <FormLabel>Tell them your name...</FormLabel> */}
             <Input ref={initialRef} placeholder="Your name" onChange={handleInputChange} />
             <FormHelperText>Best enter something that clearly points to you.</FormHelperText>
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="green" onClick={handleSubmit} disabled={input.length === 0 || input.length > 15}>Done!</Button>
-        </ModalFooter>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="green" type="submit" disabled={input.length === 0 || input.length > 15}>Done!</Button>
+          </ModalFooter>
+
+        </FormControl>
       </ModalContent>
     </Modal>
   );

@@ -2,7 +2,7 @@ import {
   Box, Container, Heading, Stack, Text, Flex, Button,
   Center, FormControl, Input, FormHelperText, Spinner, Divider, HStack, Avatar, Tag, TagLabel, Wrap, WrapItem, Mark,
 } from '@chakra-ui/react';
-import {useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import shallow from 'zustand/shallow';
 import {Question} from '../lib/state';
 import ReadyPlayersList from '../components/ReadyPlayersList';
@@ -61,7 +61,8 @@ function QuestionBox({question}: {question: Question}) {
   const [answer, setAnswer] = useState('');
   const room = useRoomStore((s) => s.room);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     room.send('submitAnswer', answer);
     setSubmitted(true);
   };
@@ -73,35 +74,37 @@ function QuestionBox({question}: {question: Question}) {
           {question.text}
         </Heading>
       </Box>
-      <Input
-        borderRadius={0}
-        placeholder="Answer here"
-        size="lg"
-        disabled={submitted}
-        onChange={(s) => setAnswer(s.currentTarget.value.trim())}
-      />
-      <HStack align="center" justifyContent="center" pt={2}>
-        <Heading
-          flex={1}
-          color={answer.length > MAX_LENGTH ? 'red' : 'black'}
-          size="md"
-          fontWeight={500}
-        >
-          {answer.length}
-          {' '}
-          /
-          {' '}
-          {MAX_LENGTH}
-        </Heading>
-        <Button
-          alignSelf="end"
-          disabled={answer.length === 0 || answer.length > MAX_LENGTH || submitted}
+      <FormControl as="form" isRequired onSubmit={handleSubmit}>
+        <Input
+          borderRadius={0}
+          placeholder="Answer here"
           size="lg"
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </HStack>
+          disabled={submitted}
+          onChange={(s) => setAnswer(s.currentTarget.value.trim())}
+        />
+        <HStack align="center" justifyContent="center" pt={2}>
+          <Heading
+            flex={1}
+            color={answer.length > MAX_LENGTH ? 'red' : 'black'}
+            size="md"
+            fontWeight={500}
+          >
+            {answer.length}
+            {' '}
+            /
+            {' '}
+            {MAX_LENGTH}
+          </Heading>
+          <Button
+            alignSelf="end"
+            disabled={answer.length === 0 || answer.length > MAX_LENGTH || submitted}
+            size="lg"
+            type="submit"
+          >
+            Submit
+          </Button>
+        </HStack>
+      </FormControl>
 
     </Stack>
   );
