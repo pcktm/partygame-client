@@ -1,4 +1,8 @@
 .safarishit {
   min-height: 100vh;
-  min-height: -webkit-fill-available;
+  
+  // LOL
+  @supports (-webkit-touch-callout: none) {
+    min-height: -webkit-fill-available;
+  }
 }

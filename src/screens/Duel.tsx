@@ -33,6 +33,8 @@ export default function DuelScreen() {
     room.send('requestNextScreen');
   };
 
+  console.log(JSON.parse(JSON.stringify(state)));
+
   return (
     <Stack className={styles.safarishit}>
       <Container flex={1} py="15px" display="flex" flexDirection="column">
