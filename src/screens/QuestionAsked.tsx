@@ -67,6 +67,13 @@ function QuestionBox({question}: {question: Question}) {
     setSubmitted(true);
   };
 
+  const enableEditing = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setSubmitted(false);
+  };
+
+  const limitColor = answer.length > MAX_LENGTH ? 'red' : 'black';
+
   return (
     <Stack flexDirection="column" spacing={0} mb={4}>
       <Box px={3} py={4} bg="black" color="white">
@@ -80,12 +87,13 @@ function QuestionBox({question}: {question: Question}) {
           placeholder="Answer here"
           size="lg"
           disabled={submitted}
+          value={submitted ? '●●●●●●●●' : answer}
           onChange={(s) => setAnswer(s.currentTarget.value.trim())}
         />
         <HStack align="center" justifyContent="center" pt={2}>
           <Heading
             flex={1}
-            color={answer.length > MAX_LENGTH ? 'red' : 'black'}
+            color={submitted ? 'gray' : limitColor}
             size="md"
             fontWeight={500}
           >
@@ -95,14 +103,21 @@ function QuestionBox({question}: {question: Question}) {
             {' '}
             {MAX_LENGTH}
           </Heading>
-          <Button
-            alignSelf="end"
-            disabled={answer.length === 0 || answer.length > MAX_LENGTH || submitted}
-            size="lg"
-            type="submit"
-          >
-            Submit
-          </Button>
+          {submitted ? (
+            <Button size="lg" alignSelf="end" onClick={enableEditing}>
+              Edit
+            </Button>
+          ) : (
+            <Button
+              alignSelf="end"
+              disabled={answer.length === 0 || answer.length > MAX_LENGTH || submitted}
+              size="lg"
+              type="submit"
+            >
+              Submit
+            </Button>
+          )}
+
         </HStack>
       </FormControl>
 

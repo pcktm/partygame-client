@@ -5,7 +5,7 @@ import {
 export const HeroTitle = () => (
   <Box
     fontSize="4xl"
-    lineHeight="tall"
+    lineHeight={1.5}
     mb="10px"
     position="relative"
   >
