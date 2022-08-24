@@ -4,7 +4,7 @@ import {
 import {useEffect, useState} from 'react';
 
 export default function QuestionCountIndicator() {
-  const [count, setCount] = useState<number>();
+  const [count, setCount] = useState<number>(0);
   const toast = useToast();
 
   useEffect(() => {
@@ -18,7 +18,8 @@ export default function QuestionCountIndicator() {
         if (toast.isActive('colyseus-api-down')) return;
         toast({
           id: 'colyseus-api-down',
-          description: 'Game server seems down!',
+          title: 'Couldn\'t reach server',
+          description: 'Something went wrong. You could try refreshing the page.',
           status: 'error',
           isClosable: false,
           duration: 9000,
