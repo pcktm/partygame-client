@@ -1,30 +1,30 @@
 import {
-  Heading, Mark, Stack, Text,
+  Heading, Mark, Stack, Text, Box,
 } from '@chakra-ui/react';
 
 export const HeroTitle = () => (
-  <Heading
-    fontWeight="900"
+  <Box
     fontSize="4xl"
     lineHeight="tall"
     mb="10px"
+    position="relative"
   >
-    <Mark bg="black" color="white" px="2" py="1">
-      UNNAMED
+    <Mark bg="black" fontWeight="900" color="white" px="2" py="1">
+      @PCKTM&apos;S
     </Mark>
     {' '}
     <br />
-    <Mark bg="black" color="white" px="2" py="1">
+    <Mark bg="black" fontWeight="600" color="white" px="2" py="1">
       PARTY
     </Mark>
     {' '}
     <br />
-    <Mark bg="black" color="white" px="2" py="1">
+    <Mark bg="black" fontWeight="600" color="white" px="2" py="1">
       GAME
     </Mark>
     {' '}
     <br />
-  </Heading>
+  </Box>
 );
 
 export const HeroTagline = () => (

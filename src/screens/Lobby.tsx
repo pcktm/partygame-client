@@ -1,5 +1,5 @@
 import {
-  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider,
+  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider, HStack, CloseButton,
 } from '@chakra-ui/react';
 import {
   useEffect, useMemo, useRef, useState, Fragment,
@@ -22,16 +22,27 @@ export default function Lobby() {
     setReady((s) => !s);
   };
 
+  const leaveLobby = async () => {
+    room.leave();
+  };
+
   return (
     <Stack className={styles.safarishit}>
       <Container flex={1} py="15px" display="flex" flexDirection="column">
+
         <Box>
-          <Heading
-            fontWeight="900"
-            fontSize="5xl"
-          >
-            LOBBY
-          </Heading>
+          <HStack>
+            <Heading
+              fontWeight="900"
+              fontSize="5xl"
+              flex={1}
+            >
+              LOBBY
+            </Heading>
+            <Box>
+              <CloseButton size="lg" onClick={leaveLobby} />
+            </Box>
+          </HStack>
           <Text>
             How long will you call these people friends?
           </Text>

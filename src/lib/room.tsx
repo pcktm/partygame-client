@@ -100,7 +100,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
               toast({
                 description: 'Room left',
                 status: 'info',
-                duration: 9000,
+                duration: 4000,
                 isClosable: true,
                 position: 'top-right',
               });
