@@ -4,6 +4,7 @@ import {
 
 import shallow from 'zustand/shallow';
 import React, {Ref, useCallback, useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
 import {HeroTitle} from '../components/Heros';
@@ -11,6 +12,7 @@ import {Player} from '../lib/state';
 import {CanvasBackgroundConfetti} from '../components/CanvasConfetti';
 
 export default function ScoresScreen() {
+  const {t} = useTranslation();
   const {room} = useRoomStore((s) => ({room: s.room}));
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
 
@@ -30,7 +32,7 @@ export default function ScoresScreen() {
         <HeroTitle />
         <Stack flex={1}>
           <Heading textAlign="center" mb={6}>
-            SCORES
+            {t('scores.header')}
           </Heading>
 
           {sortedPlayers.length > 0 ? (
@@ -59,7 +61,7 @@ export default function ScoresScreen() {
         </Stack>
         {room.sessionId === state.host && (
           <Button colorScheme="gray" size="lg" mt="20px" onClick={restartGame}>
-            PLAY AGAIN
+            {t('scores.restartGame')}
           </Button>
         )}
         <CanvasBackgroundConfetti />

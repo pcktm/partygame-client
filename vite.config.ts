@@ -8,6 +8,6 @@ export default defineConfig({
   plugins: [
     // VitePWA({}),
     react(),
-    splitVendorChunkPlugin(),
+    // splitVendorChunkPlugin(),
   ]
 })

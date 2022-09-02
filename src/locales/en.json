@@ -1,0 +1,77 @@
+{
+  "translation": {
+    "tagline": "A game where you <2>answer questions</2><br></br> and <6>lose friends.</6>",
+    "question": "Question:",
+    "ready": "READY",
+    "notReady": "NOT READY",
+    "unknownPlayer": "Unknown Player",
+    "landing": {
+      "joinByCode": "JOIN BY CODE",
+      "createRoom": "CREATE ROOM"
+    },
+    "joinModal": {
+      "header": "First, introduce yourself! 🙈",
+      "inputPlaceholder": "What's your name?",
+      "helperText": "Best enter something that clearly points to you.",
+      "submit": "Done!"
+    },
+    "lobby": {
+      "header": "LOBBY",
+      "subheader": "How long will you call these people friends?",
+      "joinCode": "JOIN CODE:"
+    },
+    "questionAsked": {
+      "header": "ROUND",
+      "subheader": "Answer as concisely as possible.",
+      "waitForOthers": "Waiting for others to answer..."
+    },
+    "questionBox": {
+      "placeholder": "Answer here",
+      "submit": "Submit",
+      "edit": "Edit"
+    },
+    "duel": {
+      "answer": "Answer:",
+      "whoSaidThat": "...who said that?",
+      "noVotes": "No one?",
+      "nextDuel": "NEXT DUEL",
+      "waitForHost": "Wait for the host to start next duel"
+    },
+    "whoSaidWhat": {
+      "whoSaidWhat": "who said what:",
+      "nextRound": "NEXT ROUND",
+      "waitForHost": "Wait for the host to start next round"
+    },
+    "scores": {
+      "header": "SCORES",
+      "restartGame": "PLAY AGAIN"
+    },
+    "questionCount": {
+      "question_one": "{{count}} question",
+      "question_other": "{{count}} questions"
+    },
+    "errors": {
+      "notConnected": "Not connected",
+      "apiDown": {
+        "title": "Couldn't reach server",
+        "description": "Something went wrong. You could try refreshing the page."
+      },
+      "failedToJoin": "Failed to join room: {{roomId}}",
+      "failedToCreate": "Failed to create room"
+    },
+    "toasts": {
+      "roomLeft": "You left the room",
+      "disconnected": "You have been disconnected",
+      "notEnoughPlayers": "Not enough players to continue",
+      "gameRestarted": "Game restarted",
+      "invalidChoice": {
+        "title": "Invalid choice",
+        "description": "Something went wrong, defaulting to left choice"
+      },
+      "inviteFriends": {
+        "title": "Invite your friends!",
+        "description": "You need at least 2 players to play"
+      }
+    }
+  } 
+}

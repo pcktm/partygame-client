@@ -4,6 +4,7 @@ import {
 } from '@chakra-ui/react';
 import React, {useEffect, useState} from 'react';
 import shallow from 'zustand/shallow';
+import {useTranslation} from 'react-i18next';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
 import ReadyPlayersList from '../components/ReadyPlayersList';
@@ -11,6 +12,7 @@ import {Player} from '../lib/state';
 
 export default function DuelScreen() {
   const [myChoice, setMyChoice] = useState<string>();
+  const {t} = useTranslation();
   const room = useRoomStore((s) => s.room);
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
 
@@ -33,8 +35,6 @@ export default function DuelScreen() {
     room.send('requestNextScreen');
   };
 
-  // console.log(JSON.parse(JSON.stringify(state)));
-
   return (
     <Stack className={styles.safarishit}>
       <Container flex={1} py="15px" display="flex" flexDirection="column">
@@ -46,7 +46,7 @@ export default function DuelScreen() {
               fontSize="xl"
             >
               <Mark bg="black" color="white" px="2" py="1">
-                Question:
+                {t('question')}
               </Mark>
             </Heading>
 
@@ -60,7 +60,7 @@ export default function DuelScreen() {
               fontSize="xl"
             >
               <Mark bg="black" color="white" px="2" py="1">
-                Answer:
+                {t('duel.answer')}
               </Mark>
             </Heading>
 
@@ -84,7 +84,7 @@ export default function DuelScreen() {
           <Center>
             <Text>
               <Mark bg="black" color="white" px="2" py="1">
-                ...who said that?
+                {t('duel.whoSaidThat')}
               </Mark>
             </Text>
           </Center>
@@ -147,7 +147,7 @@ export default function DuelScreen() {
                     </Wrap>
                     {voters.length === 0 && (
                     <Box>
-                      No one?
+                      {t('duel.noVotes')}
                     </Box>
                     )}
                   </Box>
@@ -163,10 +163,10 @@ export default function DuelScreen() {
             <Divider mt="15px" />
 
             <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextDuel}>
-              NEXT DUEL
+              {t('duel.nextDuel')}
             </Button>
           </>
-        ) : (<>Wait for the host to start next duel</>))}
+        ) : (<>{t('duel.waitForHost')}</>))}
 
         <Box>
           {
@@ -190,7 +190,7 @@ function PlayerChoiceBox(
       borderRadius="5px"
       boxShadow={selected ? 'dark-lg' : 'none'}
       p={3}
-      bg={selected ? 'purple.400' : 'black'}
+      bg={selected ? 'blue.600' : 'black'}
       color="white"
       fontSize="xl"
       textAlign="center"

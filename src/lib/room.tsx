@@ -4,6 +4,7 @@ import create, {StoreApi} from 'zustand';
 import React, {useEffect} from 'react';
 import createContext from 'zustand/context';
 import {useToast} from '@chakra-ui/react';
+import {useTranslation} from 'react-i18next';
 import {useClient} from './client';
 import {State} from './state';
 
@@ -28,6 +29,7 @@ const clientWrapperHAXX: {client?: Client} = {
 };
 
 export function RoomStoreProvider({children}: {children: React.ReactNode}) {
+  const {t} = useTranslation();
   const client = useClient();
   const toast = useToast();
   useEffect(() => {
@@ -49,7 +51,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
               get().setRoom(r);
             } catch (e) {
               toast({
-                description: `Failed to join room: "${roomId.toUpperCase()}"`,
+                description: t('errors.failedToJoin', {roomId: roomId.toUpperCase()}),
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -63,10 +65,11 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
           if (cc) {
             try {
               const r = await cc.create<State>('game_room', {nickname});
+              await new Promise((res) => setTimeout(res, 500));
               get().setRoom(r);
             } catch (e) {
               toast({
-                description: 'Failed to create room',
+                description: t('errors.failedToCreate'),
                 status: 'error',
                 duration: 9000,
                 isClosable: true,
@@ -87,8 +90,8 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
             title?: string, description: string, status?: string, duration?: number, isClosable?: boolean
           }) => {
             toast({
-              title: message.title,
-              description: message.description,
+              title: message.title ? t(message.title) : undefined,
+              description: t(message.description),
               status: message.status as any ?? 'info',
               duration: message.duration ?? 4000,
               position: 'top-right',
@@ -98,7 +101,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
           room.onLeave((code) => {
             if (code === 1000) {
               toast({
-                description: 'Room left',
+                description: t('toasts.roomLeft'),
                 status: 'info',
                 duration: 2500,
                 isClosable: true,
@@ -106,7 +109,7 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
               });
             } else {
               toast({
-                description: 'You have been disconnected from the room',
+                description: t('toasts.disconnected'),
                 status: 'error',
                 duration: 9000,
                 isClosable: true,

@@ -6,12 +6,14 @@ import {
 } from 'react';
 import {motion} from 'framer-motion';
 import shallow from 'zustand/shallow';
+import {useTranslation} from 'react-i18next';
 import {Player} from '../lib/state';
 import {useRoomStore} from '../lib/room';
 import styles from '../styles/fixes.module.scss';
 
 export default function Lobby() {
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
+  const {t} = useTranslation();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const players = Array.from(state.players.values());
   const room = useRoomStore((s) => s.room);
@@ -37,14 +39,14 @@ export default function Lobby() {
               fontSize="5xl"
               flex={1}
             >
-              LOBBY
+              {t('lobby.header')}
             </Heading>
             <Box>
               <CloseButton size="lg" onClick={leaveLobby} />
             </Box>
           </HStack>
           <Text>
-            How long will you call these people friends?
+            {t('lobby.subheader')}
           </Text>
         </Box>
 
@@ -59,7 +61,7 @@ export default function Lobby() {
         <Divider mt="15px" />
 
         <Button colorScheme="gray" size="lg" mt="15px" onClick={toggleReady}>
-          {isReady ? 'NOT READY' : 'READY'}
+          {isReady ? t('notReady') : t('ready')}
         </Button>
       </Container>
     </Stack>
@@ -101,27 +103,31 @@ const PlayerAvatar = ({player}: {player: Player}) => {
   );
 };
 
-const JoinCodeDisplay = ({code}: {code: string}) => (
-  <Box>
-    <Stack
-      as={Box}
-      alignItems="center"
-      spacing={1}
-    >
-      <Heading
-        fontWeight="900"
-        fontSize="4xl"
+const JoinCodeDisplay = ({code}: {code: string}) => {
+  const {t} = useTranslation();
+
+  return (
+    <Box>
+      <Stack
+        as={Box}
+        alignItems="center"
+        spacing={1}
       >
-        JOIN CODE:
-      </Heading>
-      <Heading
-        fontWeight="900"
-        fontSize="6xl"
-      >
-        <Mark bg="black" color="white" px="4" py="2" fontFamily="mono">
-          {code}
-        </Mark>
-      </Heading>
-    </Stack>
-  </Box>
-);
+        <Heading
+          fontWeight="900"
+          fontSize="4xl"
+        >
+          {t('lobby.joinCode')}
+        </Heading>
+        <Heading
+          fontWeight="900"
+          fontSize="6xl"
+        >
+          <Mark bg="black" color="white" px="4" py="2" fontFamily="mono">
+            {code}
+          </Mark>
+        </Heading>
+      </Stack>
+    </Box>
+  );
+};

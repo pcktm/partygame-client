@@ -1,6 +1,7 @@
 import {
   Heading, Mark, Stack, Text, Box,
 } from '@chakra-ui/react';
+import {Trans} from 'react-i18next';
 
 export const HeroTitle = () => (
   <Box
@@ -30,13 +31,15 @@ export const HeroTitle = () => (
 export const HeroTagline = () => (
   <Stack alignItems="end">
     <Text textAlign="right" fontSize="md">
-      A game where you
-      {' '}
-      <Mark bg="black" color="white" px="2" py="1">answer questions</Mark>
-      <br />
-      and
-      {' '}
-      <Mark bg="black" color="white" px="2" py="1">lose friends.</Mark>
+      <Trans i18nKey="tagline">
+        A game where you
+        {' '}
+        <Mark bg="black" color="white" px="2" py="1">answer questions</Mark>
+        <br />
+        and
+        {' '}
+        <Mark bg="black" color="white" px="2" py="1">lose friends.</Mark>
+      </Trans>
     </Text>
   </Stack>
 );

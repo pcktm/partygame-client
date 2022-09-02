@@ -1,20 +1,20 @@
 import {
-  Box, Container, Heading, Stack, Text, Flex, Button,
-  Center, Spinner, Divider, HStack, Avatar, Tag, TagLabel, Wrap, WrapItem, Mark,
+  Box, Container, Heading, Stack, Text, Button,
+  Center, Divider, Mark,
 } from '@chakra-ui/react';
-import React, {useEffect, useState} from 'react';
 import shallow from 'zustand/shallow';
+import {useTranslation} from 'react-i18next';
 import styles from '../styles/fixes.module.scss';
 import {useRoomStore} from '../lib/room';
-import {Player} from '../lib/state';
 
 export default function WhoSaidWhatScreen() {
+  const {t} = useTranslation();
   const room = useRoomStore((s) => s.room);
   const {state, revision} = useRoomStore((s) => ({revision: s.revision, state: s.state}), shallow);
 
   const rawAns = Array.from(state.currentQuestion.answers).map(([id, text]) => ({
     player: state.players.get(id) ?? {
-      id, nickname: 'Unknown Player', emoji: '❌',
+      id, nickname: t('unknownPlayer'), emoji: '❌',
     },
     text,
   }));
@@ -34,7 +34,7 @@ export default function WhoSaidWhatScreen() {
               fontSize="xl"
             >
               <Mark bg="black" color="white" px="2" py="1">
-                Question:
+                {t('question')}
               </Mark>
             </Heading>
 
@@ -45,7 +45,7 @@ export default function WhoSaidWhatScreen() {
 
           <Center>
             <Mark bg="black" color="white" px="2" py="1">
-              who said what:
+              {t('whoSaidWhat.whoSaidWhat')}
             </Mark>
           </Center>
 
@@ -83,11 +83,11 @@ export default function WhoSaidWhatScreen() {
             <Divider mt="15px" />
 
             <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextRound}>
-              NEXT ROUND
+              {t('whoSaidWhat.nextRound')}
             </Button>
           </>
         ) : (
-          <Text>wait for the host to start next round</Text>
+          <Text>{t('whoSaidWhat.waitForHost')}</Text>
         )}
       </Container>
     </Stack>

@@ -1,0 +1,78 @@
+{
+  "translation": {
+    "tagline": "Gra, w której <2>odpowiadasz na pytania</2><br></br> i <6>tracisz przyjaciół.</6>",
+    "question": "Pytanie:",
+    "ready": "GOTOWY",
+    "notReady": "NIE GOTOWY",
+    "unknownPlayer": "Nieznany Gracz",
+    "landing": {
+      "joinByCode": "DOŁĄCZ Z KODEM",
+      "createRoom": "UTWÓRZ POKÓJ"
+    },
+    "joinModal": {
+      "header": "Po pierwsze, przedstaw się! 🙈",
+      "inputPlaceholder": "Jak masz na imię?",
+      "helperText": "Najlepiej wpisz coś, co wyraźnie wskazuje na Ciebie.",
+      "submit": "Zrobione!"
+    },
+    "lobby": {
+      "header": "LOBBY",
+      "subheader": "Jak długo będziesz nazywał tych ludzi przyjaciółmi?",
+      "joinCode": "KOD POKOJU:"
+    },
+    "questionAsked": {
+      "header": "RUNDA",
+      "subheader": "Odpowiedz jak najzwięźlej.",
+      "waitForOthers": "Poczekaj aż reszta odpowie..."
+    },
+    "questionBox": {
+      "placeholder": "Odpowiedź tutaj",
+      "submit": "Wyślij",
+      "edit": "Edytuj"
+    },
+    "duel": {
+      "answer": "Odpowiedź:",
+      "whoSaidThat": "...kto to powiedział?",
+      "noVotes": "Nikt?",
+      "nextDuel": "NASTĘPNY POJEDYNEK",
+      "waitForHost": "Poczekaj aż gospodarz rozpocznie kolejny pojedynek"
+    },
+    "whoSaidWhat": {
+      "whoSaidWhat": "kto powiedział co:",
+      "nextRound": "NASTĘPNA RUNDA",
+      "waitForHost": "Poczekaj, aż gospodarz rozpocznie kolejną rundę"
+    },
+    "scores": {
+      "header": "WYNIKI",
+      "restartGame": "ZAGRAJ PONOWNIE"
+    },
+    "questionCount": {
+      "question_one": "{{count}} pytanie",
+      "question_few": "{{count}} pytania",
+      "question_many": "{{count}} pytań"
+    },
+    "errors": {
+      "notConnected": "Nie połączono",
+      "apiDown": {
+        "title": "Nie udało się połączyć z serwerem",
+        "description": "Coś poszło nie tak. Możesz spróbować odświeżyć stronę."
+      },
+      "failedToJoin": "Nie udało się dołączyć do pokoju: {{roomId}}",
+      "failedToCreate": "Nie udało się utworzyć pokoju"
+    },
+    "toasts": {
+      "roomLeft": "Opuściłeś pokój",
+      "disconnected": "Zostałeś rozłączony",
+      "notEnoughPlayers": "Za mało graczy, by kontynuować",
+      "gameRestarted": "Gra została zrestartowana",
+      "invalidChoice": {
+        "title": "Niewłaściwy wybór",
+        "description": "Coś poszło nie tak, domyślnie wybieramy lewą opcję"
+      },
+      "inviteFriends": {
+        "title": "Zaproś znajomych!",
+        "description": "Do gry potrzeba co najmniej 2 graczy"
+      }
+    }
+  } 
+}
