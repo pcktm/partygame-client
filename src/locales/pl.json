@@ -13,7 +13,8 @@
       "header": "Po pierwsze, przedstaw się! 🙈",
       "inputPlaceholder": "Jak masz na imię?",
       "helperText": "Najlepiej wpisz coś, co wyraźnie wskazuje na Ciebie.",
-      "submit": "Zrobione!"
+      "submit": "Zrobione!",
+      "chooseDecks": "Wybierz talie pytań:"
     },
     "lobby": {
       "header": "LOBBY",

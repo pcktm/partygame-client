@@ -17,7 +17,7 @@ interface RoomState {
   state: State;
   revision: number;
   joinRoomById: (roomId: string, name: string) => Promise<void>;
-  createRoom: (name: string) => Promise<void>;
+  createRoom: (name: string, decks: string[]) => Promise<void>;
   dispose: () => void;
   setRoom: (room: Room) => void;
 }
@@ -60,11 +60,13 @@ export function RoomStoreProvider({children}: {children: React.ReactNode}) {
             }
           }
         },
-        createRoom: async (nickname) => {
+        createRoom: async (nickname, decks) => {
+          console.log(decks);
+          if (decks.length === 0) return;
           const {client: cc} = clientWrapperHAXX;
           if (cc) {
             try {
-              const r = await cc.create<State>('game_room', {nickname});
+              const r = await cc.create<State>('game_room', {nickname, decks});
               await new Promise((res) => setTimeout(res, 500));
               get().setRoom(r);
             } catch (e) {

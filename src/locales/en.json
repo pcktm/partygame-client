@@ -13,7 +13,8 @@
       "header": "First, introduce yourself! 🙈",
       "inputPlaceholder": "What's your name?",
       "helperText": "Best enter something that clearly points to you.",
-      "submit": "Done!"
+      "submit": "Done!",
+      "chooseDecks": "Choose question decks:"
     },
     "lobby": {
       "header": "LOBBY",
