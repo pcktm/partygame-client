@@ -14,7 +14,7 @@
       "inputPlaceholder": "What's your name?",
       "helperText": "Best enter something that clearly points to you.",
       "submit": "Done!",
-      "chooseDecks": "Choose question decks:"
+      "chooseDecks": "Select question decks:"
     },
     "lobby": {
       "header": "LOBBY",
