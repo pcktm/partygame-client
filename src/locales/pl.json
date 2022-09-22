@@ -77,6 +77,10 @@
       "inviteFriends": {
         "title": "Zaproś znajomych!",
         "description": "Do gry potrzeba co najmniej 2 graczy"
+      },
+      "itsMoreFun": {
+        "title": "Z przyjaciółmi jest raźniej!",
+        "description": "Gra staje się naprawdę ciekawa przy 4+ graczach..."
       }
     }
   } 

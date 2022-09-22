@@ -76,6 +76,10 @@
       "inviteFriends": {
         "title": "Invite your friends!",
         "description": "You need at least 2 players to play"
+      },
+      "itsMoreFun": {
+        "title": "It's more fun with friends!",
+        "description": "The game starts to get really interesting with 4+ players..."
       }
     }
   } 
