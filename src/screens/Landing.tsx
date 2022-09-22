@@ -99,26 +99,49 @@ export default function Landing() {
           </Box>
 
           <Center flex={1} flexDirection="column">
-            {(isConnecting || modalDisclosure.isOpen) ? <Spinner size="lg" /> : (
-              <Stack pb="30px" alignItems="center">
-                <Heading>
-                  {t('landing.joinByCode')}
-                </Heading>
-                <HStack>
-                  <PinInput type="alphanumeric" onComplete={handlePinInput} isDisabled={isConnecting}>
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                    <PinInputField />
-                  </PinInput>
-                </HStack>
-              </Stack>
-            )}
+            <Stack
+              py="30px"
+              px="35px"
+              mb="25px"
+              alignItems="center"
+              borderColor="purple.200"
+              borderWidth="1px"
+              borderRadius="lg"
+              boxShadow="xl"
+            >
+              {(isConnecting || modalDisclosure.isOpen) ? <Spinner size="lg" /> : (
+                <>
+                  <Heading>
+                    {t('landing.joinByCode')}
+                  </Heading>
+                  <HStack>
+                    <PinInput type="alphanumeric" onComplete={handlePinInput} isDisabled={isConnecting}>
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                      <PinInputField />
+                    </PinInput>
+                  </HStack>
+                </>
+              )}
+            </Stack>
           </Center>
 
-          <Button colorScheme="gray" size="lg" isDisabled={isConnecting} onClick={handleCreateButton}>
+          <Center mb={5} position="relative" userSelect="none">
+            <Divider position="absolute" zIndex={-2} />
+            <Text px={3} backgroundColor="white" color="gray.500">
+              {t('landing.or')}
+            </Text>
+          </Center>
+          <Button
+            colorScheme="purple"
+            size="lg"
+            boxShadow="lg"
+            isDisabled={isConnecting}
+            onClick={handleCreateButton}
+          >
             {t('landing.createRoom')}
           </Button>
 

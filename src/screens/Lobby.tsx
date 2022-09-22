@@ -1,5 +1,5 @@
 import {
-  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider, HStack, CloseButton, useClipboard,
+  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider, HStack, CloseButton, useClipboard, Flex,
 } from '@chakra-ui/react';
 import {
   useEffect, useMemo, useRef, useState, Fragment,
@@ -18,7 +18,6 @@ export default function Lobby() {
   const players = Array.from(state.players.values());
   const room = useRoomStore((s) => s.room);
   const [isReady, setReady] = useState(false);
-  const {hasCopied, onCopy} = useClipboard(`https://partygame.kopanko.com/?room=${room.id}`);
 
   const toggleReady = async () => {
     room.send('toggleReady', !isReady);
@@ -29,14 +28,9 @@ export default function Lobby() {
     room.leave();
   };
 
-  const requestCopyLink = () => {
-
-  };
-
   return (
     <Stack className={styles.safarishit}>
       <Container flex={1} py="15px" display="flex" flexDirection="column">
-
         <Box>
           <HStack>
             <Heading
@@ -56,11 +50,11 @@ export default function Lobby() {
         </Box>
 
         <Center flex={1}>
-          <Stack mt={6}>
+          <Stack
+            mt={6}
+          >
             <JoinCodeDisplay code={room.id} />
-            <Button colorScheme="yellow" borderRadius={0} onClick={onCopy}>
-              {hasCopied ? t('lobby.copied') : t('lobby.copyUrl')}
-            </Button>
+
           </Stack>
         </Center>
 
@@ -115,12 +109,13 @@ const PlayerAvatar = ({player}: {player: Player}) => {
 
 const JoinCodeDisplay = ({code}: {code: string}) => {
   const {t} = useTranslation();
+  const {hasCopied, onCopy} = useClipboard(`https://partygame.kopanko.com/?room=${code}`);
 
   return (
     <Box>
       <Stack
-        as={Box}
         alignItems="center"
+        flexDir="column"
         spacing={1}
       >
         <Heading
@@ -129,14 +124,32 @@ const JoinCodeDisplay = ({code}: {code: string}) => {
         >
           {t('lobby.joinCode')}
         </Heading>
-        <Heading
-          fontWeight="900"
-          fontSize="6xl"
+        <Flex
+          flexDir="column"
+          boxShadow="xl"
         >
-          <Mark bg="black" color="white" px="4" py="2" fontFamily="mono">
-            {code}
-          </Mark>
-        </Heading>
+          <Heading
+            fontWeight="900"
+            fontSize="6xl"
+          >
+            <Mark
+              bg="black"
+              color="white"
+              px="4"
+              py="2"
+              fontFamily="mono"
+            >
+              {code}
+            </Mark>
+          </Heading>
+          <Button
+            colorScheme="purple"
+            borderRadius={0}
+            onClick={onCopy}
+          >
+            {hasCopied ? t('lobby.copied') : t('lobby.copyUrl')}
+          </Button>
+        </Flex>
       </Stack>
     </Box>
   );

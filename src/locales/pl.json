@@ -8,7 +8,8 @@
     "adultContent": "+18",
     "landing": {
       "joinByCode": "DOŁĄCZ Z KODEM",
-      "createRoom": "UTWÓRZ POKÓJ"
+      "createRoom": "UTWÓRZ POKÓJ",
+      "or": "LUB"
     },
     "joinModal": {
       "header": "Po pierwsze, przedstaw się! 🙈",

@@ -1,10 +1,10 @@
 import {
-  Stack, Heading, FormControl, Input, HStack, Button, Box,
+  Stack, Heading, FormControl, Input, HStack, Button, Box, Mark,
 } from '@chakra-ui/react';
-import {useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useRoomStore} from '../lib/room';
-import {Question} from '../lib/state';
+import {Player, Question} from '../lib/state';
 
 function QuestionBox({question}: {question: Question}) {
   const MAX_LENGTH = 35;
@@ -24,13 +24,50 @@ function QuestionBox({question}: {question: Question}) {
     setSubmitted(false);
   };
 
+  const mappedQuestion = useMemo(() => {
+    const contained: string[] = [];
+    for (const [key, player] of room.state.players) {
+      const isContained = question.text.includes(`${player.emoji} ${player.nickname}`);
+      if (isContained) {
+        contained.push(`${player.emoji} ${player.nickname}`);
+      }
+    }
+    const mapped: ({player: string} | string)[] = [question.text];
+    for (const str of contained) {
+      for (const part of mapped) {
+        if (typeof part === 'string') {
+          const index = part.indexOf(str);
+          if (index !== -1) {
+            const before = part.slice(0, index);
+            const after = part.slice(index + str.length);
+            const index2 = mapped.indexOf(part);
+            mapped.splice(index2, 1, before, {player: str}, after);
+          }
+        }
+      }
+    }
+    console.log(mapped);
+    return mapped;
+  }, [question.text, room.state.players]);
+
   const limitColor = answer.length > MAX_LENGTH ? 'red' : 'black';
 
   return (
     <Stack flexDirection="column" spacing={0} mb={4}>
       <Box px={3} py={4} bg="black" color="white">
         <Heading fontWeight={600} fontSize="3xl">
-          {question.text}
+          {
+            mappedQuestion.map((part) => {
+              if (typeof part === 'string') {
+                return part;
+              }
+              return (
+                <Box as="span" color="yellow.300" key={part.player}>
+                  {part.player}
+                </Box>
+              );
+            })
+          }
         </Heading>
       </Box>
       <FormControl as="form" isRequired onSubmit={handleSubmit}>

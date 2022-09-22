@@ -161,7 +161,6 @@ export default function DuelScreen() {
         {state.currentDuel.revealVotes && ((room.sessionId === state.host && state.currentDuel.revealVotes) ? (
           <>
             <Divider mt="15px" />
-
             <Button colorScheme="gray" size="lg" mt="15px" onClick={requestNextDuel}>
               {t('duel.nextDuel')}
             </Button>
@@ -185,27 +184,31 @@ function PlayerChoiceBox(
   }: {player: Player, selected: boolean, onClick: () => void, fogged: boolean},
 ) {
   return (
-    <Box
-      flex={1}
-      borderRadius="5px"
-      boxShadow={selected ? 'dark-lg' : 'none'}
-      p={3}
-      bg={selected ? 'blue.600' : 'black'}
-      color="white"
-      fontSize="xl"
-      textAlign="center"
-      onClick={onClick}
-      userSelect="none"
-      filter={fogged && !selected ? 'blur(2px)' : 'none'}
-    >
-      <Stack alignItems="center">
-        <Text fontSize="4xl">
-          {player.emoji}
-        </Text>
-        <Text textAlign="center" wordBreak="break-all">
-          {player.nickname}
-        </Text>
-      </Stack>
+    <Box filter={fogged && !selected ? 'saturate(0%);' : 'none'}>
+      <Box
+        flex={1}
+        borderRadius="md"
+        boxShadow={selected ? '2xl' : 'none'}
+        p={3}
+        bg={selected ? 'purple.500' : 'black'}
+        color="white"
+        borderColor={selected ? 'purple.700' : 'black'}
+        borderWidth={selected ? '1px' : 0}
+        fontSize="xl"
+        textAlign="center"
+        onClick={onClick}
+        userSelect="none"
+        filter={fogged && !selected ? 'blur(2px);' : 'none'}
+      >
+        <Stack alignItems="center">
+          <Text fontSize="4xl">
+            {player.emoji}
+          </Text>
+          <Text textAlign="center" wordBreak="break-all">
+            {player.nickname}
+          </Text>
+        </Stack>
+      </Box>
     </Box>
   );
 }
