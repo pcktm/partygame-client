@@ -1,7 +1,7 @@
 import {
   Box, Container, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
   Center, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, Input, FormHelperText, Spinner,
-  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup, ModalCloseButton, Divider,
+  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup, ModalCloseButton, Divider, useToast,
 } from '@chakra-ui/react';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -21,34 +21,35 @@ export default function Landing() {
   const [pin, setPin] = useState('');
   const joinRoomById = useRoomStore((s) => s.joinRoomById);
   const createRoom = useRoomStore((s) => s.createRoom);
+  const toast = useToast();
   const modalDisclosure = useDisclosure();
   const {t} = useTranslation();
 
-  const handlePinInput = useCallback((value: string) => {
-    setConnecting(true);
+  const handlePinInput = (value: string) => {
     setFlow('join');
     setPin(value);
     modalDisclosure.onOpen();
-  }, [modalDisclosure]);
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('room');
-    console.log(roomId);
     if (roomId) {
-      // remove room from url
+      if (roomId.length === 6) {
+        handlePinInput(roomId);
+      }
       window.history.replaceState({}, document.title, '/');
-      handlePinInput(roomId);
     }
-  }, [handlePinInput]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window]);
 
   const handleCreateButton = () => {
-    setConnecting(true);
     setFlow('create');
     modalDisclosure.onOpen();
   };
 
   const handleModalSubmit = async (name: string, decks: string[] = []) => {
+    setConnecting(true);
     if (flow === 'create') {
       await createRoom(name, decks);
     } else if (flow === 'join') {
@@ -58,7 +59,6 @@ export default function Landing() {
   };
 
   const handleModalClose = () => {
-    setConnecting(false);
     modalDisclosure.onClose();
   };
 
@@ -99,7 +99,7 @@ export default function Landing() {
           </Box>
 
           <Center flex={1} flexDirection="column">
-            {isConnecting ? <Spinner size="lg" /> : (
+            {(isConnecting || modalDisclosure.isOpen) ? <Spinner size="lg" /> : (
               <Stack pb="30px" alignItems="center">
                 <Heading>
                   {t('landing.joinByCode')}
