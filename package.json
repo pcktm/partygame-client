@@ -1,7 +1,7 @@
 {
   "name": "partygame-client",
   "private": false,
-  "version": "2.2.0",
+  "version": "2.3.0",
   "type": "module",
   "license": "AGPL-3.0",
   "author": "Jakub Kopańko <hi@kopanko.com> (kopanko.com)",
