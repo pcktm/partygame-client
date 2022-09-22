@@ -4,6 +4,7 @@ import {ChakraProvider, extendTheme} from '@chakra-ui/react';
 import {SWRConfig} from 'swr';
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import App from './App';
 import {ColyseusClientProvider} from './lib/client';
 import {RoomStoreProvider} from './lib/room';
@@ -13,12 +14,16 @@ import en from './locales/en.json';
 import pl from './locales/pl.json';
 
 i18n
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    detection: {
+      caches: ['localStorage', 'sessionStorage'],
+    },
+    fallbackLng: 'en',
     resources: {
       en, pl,
     },
-    lng: 'en',
     interpolation: {
       escapeValue: false,
     },

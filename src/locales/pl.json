@@ -14,7 +14,7 @@
       "inputPlaceholder": "Jak masz na imię?",
       "helperText": "Najlepiej wpisz coś, co wyraźnie wskazuje na Ciebie.",
       "submit": "Zrobione!",
-      "chooseDecks": "Wybierz talie pytań:"
+      "chooseDecks": "Wybierz swoje talie (możesz wybrać wiele talii jednocześnie):"
     },
     "lobby": {
       "header": "LOBBY",

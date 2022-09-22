@@ -1,7 +1,7 @@
 import {
   Box, Container, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
   Center, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, Input, FormHelperText, Spinner,
-  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup,
+  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup, ModalCloseButton,
 } from '@chakra-ui/react';
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -46,9 +46,19 @@ export default function Landing() {
     setConnecting(false);
   };
 
+  const handleModalClose = () => {
+    setConnecting(false);
+    modalDisclosure.onClose();
+  };
+
   return (
     <>
-      <NameModal {...modalDisclosure} onSubmit={handleModalSubmit} flow={flow} />
+      <NameModal
+        isOpen={modalDisclosure.isOpen}
+        onClose={handleModalClose}
+        onSubmit={handleModalSubmit}
+        flow={flow}
+      />
       <Stack className={styles.safarishit}>
         <Container
           flex={1}
@@ -66,7 +76,7 @@ export default function Landing() {
                   <HeroTitle />
                 </Box>
                 <Box>
-                  <LanguagePicker />
+                  <LanguagePicker mt={2} />
                 </Box>
               </HStack>
 
@@ -116,7 +126,7 @@ export default function Landing() {
 
 const NameModal = ({
   isOpen, onClose, onSubmit, flow,
-}: ReturnType<typeof useDisclosure> & {onSubmit: (v: string, d: string[]) => void, flow: FlowType}) => {
+}: {isOpen: boolean, onClose: () => void, onSubmit: (v: string, d: string[]) => void, flow: FlowType}) => {
   const initialRef = React.useRef(null);
   const [input, setInput] = useState('');
   const {t, i18n} = useTranslation();
@@ -147,21 +157,22 @@ const NameModal = ({
     <Modal onClose={onClose} size={{base: 'lg', md: 'xl'}} isOpen={isOpen} isCentered initialFocusRef={initialRef} closeOnOverlayClick={false}>
       <ModalOverlay backdropFilter="blur(20px)" bg="blackAlpha.400" />
       <ModalContent>
-        <ModalHeader>{t('joinModal.header')}</ModalHeader>
+        <ModalHeader>
+          {t('joinModal.header')}
+        </ModalHeader>
+        <ModalCloseButton />
         <FormControl as="form" onSubmit={handleSubmit}>
-
           <ModalBody>
             <Input
               ref={initialRef}
               placeholder={t('joinModal.inputPlaceholder')}
               onChange={handleInputChange}
             />
-            <FormHelperText>{t('joinModal.helperText')}</FormHelperText>
             {flow === 'create' && (
               <Box mt={6}>
-                {/* <Text mb={1}>
-                  {t('joinModal.chooseDecks')}
-                </Text> */}
+                <Text mb={1}>
+                  <FormHelperText>{t('joinModal.chooseDecks')}</FormHelperText>
+                </Text>
                 <Box>
                   <Wrap spacing={3}>
                     {
