@@ -21,6 +21,7 @@ i18n
       caches: ['localStorage', 'sessionStorage'],
     },
     fallbackLng: 'en',
+    supportedLngs: ['en', 'pl'],
     resources: {
       en, pl,
     },
