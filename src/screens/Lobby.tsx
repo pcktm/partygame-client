@@ -1,5 +1,5 @@
 import {
-  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider, HStack, CloseButton,
+  Container, Box, Heading, Mark, Stack, Wrap, WrapItem, Center, Text, Button, Divider, HStack, CloseButton, useClipboard,
 } from '@chakra-ui/react';
 import {
   useEffect, useMemo, useRef, useState, Fragment,
@@ -18,6 +18,7 @@ export default function Lobby() {
   const players = Array.from(state.players.values());
   const room = useRoomStore((s) => s.room);
   const [isReady, setReady] = useState(false);
+  const {hasCopied, onCopy} = useClipboard(`https://partygame.kopanko.com/?room=${room.id}`);
 
   const toggleReady = async () => {
     room.send('toggleReady', !isReady);
@@ -26,6 +27,10 @@ export default function Lobby() {
 
   const leaveLobby = async () => {
     room.leave();
+  };
+
+  const requestCopyLink = () => {
+
   };
 
   return (
@@ -51,7 +56,12 @@ export default function Lobby() {
         </Box>
 
         <Center flex={1}>
-          <JoinCodeDisplay code={room.id} />
+          <Stack mt={6}>
+            <JoinCodeDisplay code={room.id} />
+            <Button colorScheme="yellow" borderRadius={0} onClick={onCopy}>
+              {hasCopied ? t('lobby.copied') : t('lobby.copyUrl')}
+            </Button>
+          </Stack>
         </Center>
 
         <Center flex={1}>

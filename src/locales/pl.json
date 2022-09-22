@@ -5,6 +5,7 @@
     "ready": "GOTOWY",
     "notReady": "NIE GOTOWY",
     "unknownPlayer": "Nieznany Gracz",
+    "adultContent": "+18",
     "landing": {
       "joinByCode": "DOŁĄCZ Z KODEM",
       "createRoom": "UTWÓRZ POKÓJ"
@@ -19,7 +20,9 @@
     "lobby": {
       "header": "LOBBY",
       "subheader": "Jak długo będziesz nazywał tych ludzi przyjaciółmi?",
-      "joinCode": "KOD POKOJU:"
+      "joinCode": "KOD POKOJU:",
+      "copyUrl": "Skopiuj link",
+      "copied": "Skopiowano!"
     },
     "questionAsked": {
       "header": "RUNDA",

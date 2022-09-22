@@ -1,9 +1,9 @@
 import {
   Box, Container, Heading, Stack, Text, Mark, HStack, PinInput, PinInputField, Button, useDisclosure, Modal, ModalBody,
   Center, ModalContent, ModalFooter, ModalHeader, ModalOverlay, FormControl, Input, FormHelperText, Spinner,
-  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup, ModalCloseButton,
+  Alert, AlertIcon, Wrap, WrapItem, useCheckboxGroup, ModalCloseButton, Divider,
 } from '@chakra-ui/react';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import useSWR from 'swr';
 import styles from '../styles/fixes.module.scss';
@@ -24,12 +24,23 @@ export default function Landing() {
   const modalDisclosure = useDisclosure();
   const {t} = useTranslation();
 
-  const handlePinInput = (value: string) => {
+  const handlePinInput = useCallback((value: string) => {
     setConnecting(true);
     setFlow('join');
     setPin(value);
     modalDisclosure.onOpen();
-  };
+  }, [modalDisclosure]);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomId = urlParams.get('room');
+    console.log(roomId);
+    if (roomId) {
+      // remove room from url
+      window.history.replaceState({}, document.title, '/');
+      handlePinInput(roomId);
+    }
+  }, [handlePinInput]);
 
   const handleCreateButton = () => {
     setConnecting(true);
@@ -168,11 +179,13 @@ const NameModal = ({
               placeholder={t('joinModal.inputPlaceholder')}
               onChange={handleInputChange}
             />
+            <FormHelperText>{t('joinModal.helperText')}</FormHelperText>
             {flow === 'create' && (
-              <Box mt={6}>
-                <Text mb={1}>
+              <Box>
+                <Divider my={3} />
+                <Box mb={1}>
                   <FormHelperText>{t('joinModal.chooseDecks')}</FormHelperText>
-                </Text>
+                </Box>
                 <Box>
                   <Wrap spacing={3}>
                     {

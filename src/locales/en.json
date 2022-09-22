@@ -5,6 +5,7 @@
     "ready": "READY",
     "notReady": "NOT READY",
     "unknownPlayer": "Unknown Player",
+    "adultContent": "Explicit",
     "landing": {
       "joinByCode": "JOIN BY CODE",
       "createRoom": "CREATE ROOM"
@@ -19,7 +20,9 @@
     "lobby": {
       "header": "LOBBY",
       "subheader": "How long will you call these people friends?",
-      "joinCode": "JOIN CODE:"
+      "joinCode": "JOIN CODE:",
+      "copyUrl": "Copy link",
+      "copied": "Copied!"
     },
     "questionAsked": {
       "header": "ROUND",

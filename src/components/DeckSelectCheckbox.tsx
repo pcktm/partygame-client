@@ -2,6 +2,7 @@ import {QuestionIcon} from '@chakra-ui/icons';
 import {
   useCheckbox, Box, Badge, Text, chakra, UseCheckboxProps, HStack,
 } from '@chakra-ui/react';
+import {useTranslation} from 'react-i18next';
 
 export type Deck = {
   id: string,
@@ -16,6 +17,7 @@ export function DeckSelectCheckbox(props: UseCheckboxProps & {deck: Deck}) {
   const {
     state, getCheckboxProps, getInputProps, getLabelProps, htmlProps,
   } = useCheckbox(props);
+  const {t} = useTranslation();
 
   return (
     <chakra.label
@@ -49,7 +51,7 @@ export function DeckSelectCheckbox(props: UseCheckboxProps & {deck: Deck}) {
           </Badge>
           {props.deck.isExplicit && (
           <Badge ml={2} colorScheme="red">
-            +18
+            {t('adultContent')}
           </Badge>
           )}
         </Box>
