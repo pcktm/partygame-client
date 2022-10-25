@@ -40,6 +40,7 @@
       "whoSaidThat": "...who said that?",
       "noVotes": "No one?",
       "nextDuel": "NEXT DUEL",
+      "hiddenFromOthers": "Your answer will be hidden from others",
       "waitForHost": "Wait for the host to start next duel"
     },
     "whoSaidWhat": {
@@ -79,7 +80,7 @@
       },
       "itsMoreFun": {
         "title": "It's more fun with friends!",
-        "description": "The game starts to get really interesting with 4+ players..."
+        "description": "The game becomes really interesting with 4+ players..."
       }
     }
   } 

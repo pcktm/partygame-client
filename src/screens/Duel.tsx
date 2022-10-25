@@ -88,13 +88,14 @@ export default function DuelScreen() {
               </Mark>
             </Text>
           </Center>
+
         </Stack>
-        <HStack
-          flex={1}
-          mt={state.currentDuel.revealVotes ? 10 : 0}
-          alignItems={state.currentDuel.revealVotes ? 'baseline' : 'center'}
-        >
-          {
+        <Stack flex={1} justifyContent="center">
+          <HStack
+            mt={state.currentDuel.revealVotes ? 10 : 0}
+            alignItems={state.currentDuel.revealVotes ? 'baseline' : 'center'}
+          >
+            {
             !state.currentDuel.revealVotes ? (
               [left, right].map((player) => (
                 <Box flex={1} key={player.id}>
@@ -155,8 +156,20 @@ export default function DuelScreen() {
               })
             )
           }
+          </HStack>
+          {
+            !state.currentDuel.revealVotes
+            && [state.currentDuel.left.id, state.currentDuel.right.id].includes(room.sessionId)
+            && (
+            <Box>
+              <Text textAlign="center" color="gray.600">
+                {t('duel.hiddenFromOthers')}
+              </Text>
+            </Box>
+            )
+          }
 
-        </HStack>
+        </Stack>
 
         {state.currentDuel.revealVotes && ((room.sessionId === state.host && state.currentDuel.revealVotes) ? (
           <>
